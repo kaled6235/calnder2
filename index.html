@@ -10,7 +10,7 @@
   --teal:#0F6E56;--teal-bg:#E1F5EE;--teal-dk:#085041;
   --coral:#993C1D;--coral-bg:#FAECE7;--coral-dk:#712B13;
   --amber:#BA7517;--amber-bg:#FAEEDA;--amber-dk:#633806;
-  --pw:min(280px,62vw);--ph:calc(var(--pw) * .62);
+  --pw:min(260px,58vw);--ph:calc(var(--pw) * .72);
 }
 *{box-sizing:border-box}
 body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background:var(--bg);line-height:1.6}
@@ -28,20 +28,23 @@ h2{margin:0 0 6px;font-size:24px}
 .phase.on.p1{background:var(--amber-bg);color:var(--amber-dk);border-color:var(--amber)}
 .phase.on.p2{background:var(--coral-bg);color:var(--coral-dk);border-color:var(--coral)}
 
-.stage{perspective:1100px;height:calc(var(--ph) * 2.1 + 60px);display:flex;align-items:center;justify-content:center;overflow:hidden}
-.table{transform-style:preserve-3d;transform:rotateX(34deg);background:#EDE6D8;border-radius:24px;padding:calc(var(--ph) * .12) calc(var(--pw) * .14)}
-.cal{position:relative;width:var(--pw);height:calc(var(--ph) * 2);transform-style:preserve-3d;transition:transform 1.8s cubic-bezier(.6,.05,.3,1)}
-.cal.rot{transform:rotateZ(180deg)}
-.binding{position:absolute;left:-8px;right:-8px;top:calc(var(--ph) - 7px);height:14px;background:#444441;border-radius:7px;transform:translateZ(14px);display:flex;justify-content:space-around;align-items:center}
+.stage{perspective:1000px;height:calc(var(--ph) * 1.3 + 70px);display:flex;justify-content:center;padding-top:40px;overflow:hidden}
+.cal{position:relative;width:var(--pw);height:var(--ph);transform-style:preserve-3d;transform-origin:50% 0;transform:rotateX(14deg) rotateY(0deg);transition:transform 1.8s cubic-bezier(.6,.05,.3,1)}
+.cal.rot{transform:rotateX(14deg) rotateY(180deg)}
+.mat{position:absolute;left:calc(var(--pw) * -.25);width:calc(var(--pw) * 1.5);height:calc(var(--pw) * 1.1);top:calc(var(--ph) * .9 - var(--pw) * .55);background:#EDE6D8;border-radius:50%;transform:rotateX(90deg)}
+.board{position:absolute;left:6px;right:6px;top:0;height:calc(var(--ph) - 6px);background:#B4B2A9;border-radius:4px;transform-origin:50% 0}
+.board.f{transform:rotateX(24deg)}
+.board.b{transform:rotateX(-24deg)}
+.binding{position:absolute;left:-8px;right:-8px;top:-6px;height:12px;background:#444441;border-radius:6px;display:flex;justify-content:space-around;align-items:center}
 .binding i{width:6px;height:6px;border-radius:50%;background:#B4B2A9}
-.sheet{position:absolute;left:0;top:var(--ph);width:var(--pw);height:var(--ph);transform-origin:50% 0;transform-style:preserve-3d;transition:transform 1.1s cubic-bezier(.5,.1,.3,1)}
+.sheet{position:absolute;left:0;top:0;width:var(--pw);height:var(--ph);transform-origin:50% 0;transform-style:preserve-3d;transition:transform 1.2s cubic-bezier(.5,.1,.3,1)}
 .face{position:absolute;inset:0;border-radius:6px;backface-visibility:hidden;-webkit-backface-visibility:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:8px}
 .front{background:var(--teal-bg);border:2px solid var(--teal);color:var(--teal-dk)}
 .back{background:var(--coral-bg);border:2px solid var(--coral);color:var(--coral-dk);transform:rotateY(180deg)}
-.face .m{font-size:calc(var(--pw) * .05);letter-spacing:.1em;text-transform:uppercase;font-weight:bold;opacity:.85}
-.face .d{font-size:calc(var(--pw) * .13);font-weight:bold;line-height:1.1}
-.face .t{font-size:calc(var(--pw) * .045);opacity:.75;margin-top:4px}
-.instant .sheet,.instant.cal,.instant .cal{transition:none!important}
+.face .m{font-size:calc(var(--pw) * .055);letter-spacing:.1em;text-transform:uppercase;font-weight:bold;opacity:.85}
+.face .d{font-size:calc(var(--pw) * .14);font-weight:bold;line-height:1.1}
+.face .t{font-size:calc(var(--pw) * .048);opacity:.75;margin-top:4px}
+.instant .sheet,.instant.cal{transition:none!important}
 
 .reader{text-align:center;color:var(--muted);font-size:14px}
 .caption{text-align:center;font-size:18px;font-weight:bold;min-height:60px;margin:14px auto 10px;max-width:600px}
@@ -90,31 +93,32 @@ footer{text-align:center;color:var(--muted);font-size:13px;padding:10px}
 
 <header>
   <h1>How the Calendar Works</h1>
-  <p>Jack's Snack Calendar 2.0 · Top binding · Head-to-head pages</p>
+  <p>Jack's Snack Calendar 2.0 · Tent calendar · Top binding · Head-to-head pages</p>
 </header>
 
 <main>
 
 <section>
   <h2>Watch it in action</h2>
-  <p class="sub">A simplified model of the calendar lying on a table. The middle pages are combined into one sheet.</p>
+  <p class="sub">A simplified model of the tent calendar standing on a table. The middle pages are combined into one sheet.</p>
 
   <div class="phases">
     <div class="phase p0" id="ph0">1 · Jan → July opener</div>
-    <div class="phase p1" id="ph1">2 · Rotate 180°</div>
+    <div class="phase p1" id="ph1">2 · Turn 180°</div>
     <div class="phase p2" id="ph2">3 · July 1 → Dec 31</div>
   </div>
 
   <div class="stage">
-    <div class="table">
-      <div class="cal" id="cal">
-        <div class="sheet" data-i="0"><div class="face front"><div class="m">January</div><div class="d">Opener</div><div class="t">Start here</div></div><div class="face back"><div class="m">December</div><div class="d">31</div><div class="t">Last day of the year</div></div></div>
-        <div class="sheet" data-i="1"><div class="face front"><div class="m">January</div><div class="d">1</div></div><div class="face back"><div class="m">December</div><div class="d">30</div></div></div>
-        <div class="sheet" data-i="2"><div class="face front"><div class="m">Jan 2 – Jun 29</div><div class="d">· · ·</div><div class="t">180+ more days</div></div><div class="face back"><div class="m">Jul 3 – Dec 29</div><div class="d">· · ·</div><div class="t">180+ more days</div></div></div>
-        <div class="sheet" data-i="3"><div class="face front"><div class="m">June</div><div class="d">30</div></div><div class="face back"><div class="m">July</div><div class="d">2</div></div></div>
-        <div class="sheet" data-i="4"><div class="face front"><div class="m">July opener</div><div class="d">↻</div><div class="t">Flip, then rotate</div></div><div class="face back"><div class="m">July</div><div class="d">1</div><div class="t">Part 2 starts here</div></div></div>
-        <div class="binding"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-      </div>
+    <div class="cal" id="cal">
+      <div class="mat"></div>
+      <div class="board f"></div>
+      <div class="board b"></div>
+      <div class="sheet" data-i="0"><div class="face front"><div class="m">January</div><div class="d">Opener</div><div class="t">Start here</div></div><div class="face back"><div class="m">December</div><div class="d">31</div><div class="t">Last day of the year</div></div></div>
+      <div class="sheet" data-i="1"><div class="face front"><div class="m">January</div><div class="d">1</div></div><div class="face back"><div class="m">December</div><div class="d">30</div></div></div>
+      <div class="sheet" data-i="2"><div class="face front"><div class="m">Jan 2 – Jun 29</div><div class="d">· · ·</div><div class="t">180+ more days</div></div><div class="face back"><div class="m">Jul 3 – Dec 29</div><div class="d">· · ·</div><div class="t">180+ more days</div></div></div>
+      <div class="sheet" data-i="3"><div class="face front"><div class="m">June</div><div class="d">30</div></div><div class="face back"><div class="m">July</div><div class="d">2</div></div></div>
+      <div class="sheet" data-i="4"><div class="face front"><div class="m">July opener</div><div class="d">↻</div><div class="t">Flip, then turn</div></div><div class="face back"><div class="m">July</div><div class="d">1</div><div class="t">Part 2 starts here</div></div></div>
+      <div class="binding"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
     </div>
   </div>
   <div class="reader">▲ The reader sits here</div>
@@ -134,9 +138,9 @@ footer{text-align:center;color:var(--muted);font-size:13px;padding:10px}
   <p class="sub">The key facts about how the calendar is built.</p>
   <div class="stats">
     <div class="stat"><b>384</b><span>pages: every side of a sheet counts</span></div>
-    <div class="stat"><b>Top</b><span>binding, pages flip up</span></div>
+    <div class="stat"><b>Top</b><span>binding, pages flip over the top</span></div>
     <div class="stat"><b>2</b><span>halves: Jan–Jun and Jul–Dec</span></div>
-    <div class="stat"><b>1×</b><span>180° rotation, after the July opener</span></div>
+    <div class="stat"><b>1×</b><span>180° turn, after the July opener</span></div>
   </div>
 </section>
 
@@ -144,11 +148,11 @@ footer{text-align:center;color:var(--muted);font-size:13px;padding:10px}
   <h2>One year, two halves</h2>
   <p class="sub">The same sheets are used twice: one side of each sheet first, then the other side.</p>
   <div class="flow">
-    <div class="blk b1"><h3>January → July opener</h3><p>Flip each page up over the binding. The July opener tells the reader to flip and rotate.</p></div>
+    <div class="blk b1"><h3>January → July opener</h3><p>Flip each page over the top of the tent. The July opener tells the reader to flip and turn.</p></div>
     <div class="arrow">→</div>
-    <div class="blk b2"><h3><span class="spin">↻</span> Rotate 180°</h3><p>Turn the calendar on the table, like a plate. Don't flip it over.</p></div>
+    <div class="blk b2"><h3><span class="spin">↻</span> Turn 180°</h3><p>Turn the tent around on the table, like turning a plate. Don't flip it upside down.</p></div>
     <div class="arrow">→</div>
-    <div class="blk b3"><h3>July 1 → December 31</h3><p>The other sides. Flip up the same way to the end of the year.</p></div>
+    <div class="blk b3"><h3>July 1 → December 31</h3><p>The other sides. Flip over the top the same way to the end of the year.</p></div>
   </div>
 </section>
 
@@ -156,7 +160,7 @@ footer{text-align:center;color:var(--muted);font-size:13px;padding:10px}
   <h2>Sheet map</h2>
   <p class="sub">The pages are paired like a mirror: the first day is backed by the last, the second by the second-to-last, and so on.</p>
   <div class="map">
-    <div></div><div class="h">Read first</div><div class="h">Read after rotation</div>
+    <div></div><div class="h">Read first</div><div class="h">Read after turning</div>
     <div class="n">Sheet 1</div><div class="f">January opener</div><div class="k">December 31</div>
     <div class="n">Sheet 2</div><div class="f">January 1</div><div class="k">December 30</div>
     <div class="n">Sheet 3</div><div class="f">January 2</div><div class="k">December 29</div>
@@ -173,7 +177,7 @@ footer{text-align:center;color:var(--muted);font-size:13px;padding:10px}
     <div class="thumb"><div class="pg up"><span>Front</span></div>e.g. PDF page 3</div>
     <div class="thumb"><div class="pg dn"><span>Back</span></div>e.g. PDF page 4</div>
   </div>
-  <p class="sub" style="text-align:center">In the printed calendar, these pages read upright after the 180° rotation.</p>
+  <p class="sub" style="text-align:center">On the printed tent calendar, these pages read upright once the tent is turned around.</p>
   <div class="callout">Please keep all pages in their current orientation.</div>
 </section>
 
@@ -183,6 +187,7 @@ footer{text-align:center;color:var(--muted);font-size:13px;padding:10px}
 <script>
 (function(){
   var N = 5, LAST = 10, step = 0, playing = true, timer = null;
+  var A = 26, G = 0.8;
   var sheets = document.querySelectorAll('.sheet');
   var cal = document.getElementById('cal');
   var cap = document.getElementById('caption');
@@ -191,17 +196,17 @@ footer{text-align:center;color:var(--muted);font-size:13px;padding:10px}
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   var captions = [
-    "The calendar lies flat on the table, bound at the top. It opens on the January opener.",
-    "Flip the page up over the binding. Its back (December 31) lands on the far side, upside down. That's expected.",
+    "The calendar stands like a tent, bound at the top. It opens on the January opener.",
+    "Flip the page over the top. It lands on the back of the tent, with its other side (December 31) facing out.",
     "January 1 → flip. Every January–June day is on the side read first.",
     "Keep flipping through the first half of the year…",
-    "June 30 → flip (its back is July 2). Next is the July opener, which tells the reader to flip and rotate.",
-    "Flip the July opener too. All sheets are now on the far side, backs upside down.",
-    "Rotate the whole calendar 180° on the table, like turning a plate. July 1 now reads upright.",
-    "Flip July 1 up: July 2 is next.",
+    "June 30 → flip (its other side is July 2). Next is the July opener, which tells the reader to flip and turn.",
+    "Flip the July opener over too. All pages are now on the back of the tent.",
+    "Turn the whole tent around 180° on the table, like turning a plate. July 1 now faces you, upright.",
+    "Flip July 1 over the top: July 2 is next.",
     "Keep flipping through July to December…",
     "December 30.",
-    "December 31, the back of the January opener. The year is complete!"
+    "December 31, the other side of the January opener. The year is complete!"
   ];
 
   for (var d = 0; d <= LAST; d++) dots.appendChild(document.createElement('span'));
@@ -209,8 +214,8 @@ footer{text-align:center;color:var(--muted);font-size:13px;padding:10px}
   function render(){
     for (var i = 0; i < N; i++){
       var flipped = step >= i + 1 && step < 11 - i;
-      var z = flipped ? (i + 1) * 1.5 : (N - i) * 1.5;
-      sheets[i].style.transform = 'translateZ(' + z + 'px) rotateX(' + (flipped ? 180 : 0) + 'deg)';
+      var ang = flipped ? 360 - (A + i * G) : A + (N - 1 - i) * G;
+      sheets[i].style.transform = 'rotateX(' + ang + 'deg)';
     }
     cal.classList.toggle('rot', step >= 6);
     cap.textContent = captions[step];
